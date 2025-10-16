@@ -1,0 +1,265 @@
+.orders-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.orders-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+}
+
+.orders-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+}
+
+.orders-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Table Styles */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.orders-table th, .orders-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.orders-table th {
+  background: #f8f9fa;
+  color: #333;
+  font-weight: bold;
+}
+
+.status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.status.placed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.shipped {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.status.delivered {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.track-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.track-btn:hover {
+  background: #218838;
+}
+
+/* Empty & Error */
+.empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin: 2rem 0;
+}
+
+.empty-message a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .orders-table {
+    font-size: 0.9rem;
+  }
+  .orders-table th, .orders-table td {
+    padding: 0.5rem;
+  }
+}
+
+/* ... your existing styles ... */
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-summary {
+  margin-bottom: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Timeline Styles */
+.tracking-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.step {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.step span {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.check {
+  width: 40px;
+  height: 40px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin: 0 auto;
+  animation: fadeInCheck 0.5s ease;
+}
+
+@keyframes fadeInCheck {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.truck {
+  font-size: 2rem;
+  animation: moveTruck 5s linear infinite;
+}
+
+@keyframes moveTruck {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(200%); } /* Moves across the line */
+}
+
+.step.future span {
+  color: #ccc;
+}
+
+/* Progress Bar (Dashed Road) */
+.progress-bar {
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  right: 40px;
+  height: 4px;
+  background: repeating-linear-gradient(to right, #ccc 0, #ccc 10px, transparent 10px, transparent 20px);
+  z-index: 1;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 50%; /* From placed to shipped */
+  background: #007bff;
+  animation: fillProgress 5s linear infinite;
+}
+
+@keyframes fillProgress {
+  0% { width: 0%; }
+  100% { width: 75%; } /* Towards delivered */
+}
+
+.arrival-note {
+  text-align: center;
+  font-weight: bold;
+  color: #28a745;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .tracking-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .progress-bar {
+    display: none; /* Simplify on mobile */
+  }
+  .step {
+    margin-bottom: 1rem;
+  }
+}
