@@ -4,9 +4,9 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AuthPopup from "../components/AuthPopup";
 import "./Home.css";
-import .meta.env.NEXT_PUBLIC_API_URL 
-
+// import .meta.env.NEXT_PUBLIC_API_URL 
 function Home() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ function Home() {
 
   // Fetch products
   useEffect(() => {
-    fetch(`http://localhost:3000/products/`)
+    fetch(`${apiUrl}/products/`)
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();

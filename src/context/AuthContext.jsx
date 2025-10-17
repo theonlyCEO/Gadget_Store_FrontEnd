@@ -2,7 +2,9 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
+
 export function AuthProvider({ children }) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -21,7 +23,7 @@ export function AuthProvider({ children }) {
       
     
     try {
-      const response = await fetch("http://localhost:3000/signup", {
+      const response = await fetch(`${apiUrl}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -40,7 +42,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("http://localhost:3000/checkpassword", {
+      const response = await fetch(`${apiUrl}/checkpassword`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

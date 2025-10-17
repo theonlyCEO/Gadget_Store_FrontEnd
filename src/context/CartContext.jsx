@@ -6,11 +6,12 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const { user, logout } = useAuth(); // Assume logout clears user
   const [cart, setCart] = useState([]); // No localStorage – sync with server
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Load cart from server on login/user change
   useEffect(() => {
     if (user && user.email) {
-      fetch(`http://localhost:3000/cart?email=${user.email}`)
+      fetch(`${apiUrl}/cart?email=${user.email}`)
         .then(res => res.json())
         .then(data => setCart(data || []))
         .catch(err => console.error("Load cart error:", err));
@@ -24,14 +25,14 @@ export function CartProvider({ children }) {
     if (!user || !user.email) return false;
 
     try {
-      const response = await fetch("http://localhost:3000/cart/add", {
+      const response = await fetch(`${apiUrl}/cart/add`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email, product: { ...product, quantity: product.quantity || 1 } })
       });
       if (response.ok) {
         // Refresh local cart from server
-        const items = await fetch(`http://localhost:3000/cart?email=${user.email}`).then(r => r.json());
+        const items = await fetch(`${apiUrl}/cart?email=${user.email}`).then(r => r.json());
         setCart(items);
         return true;
       }
@@ -65,7 +66,7 @@ export function CartProvider({ children }) {
     if (!user || !user.email) return;
     setCart((prev) => prev.filter(item => item._id !== productId));
     try {
-      await fetch("http://localhost:3000/cart/item", {
+      await fetch(`${apiUrl}/cart/item`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email, productId })
@@ -80,7 +81,7 @@ export function CartProvider({ children }) {
     if (!user || !user.email) return;
     setCart([]);
     try {
-      await fetch("http://localhost:3000/cart/clear", {
+      await fetch(`${apiUrl}/cart/clear`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: user.email })

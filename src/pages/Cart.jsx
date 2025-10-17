@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom"; // Use Link for checkout
 import "./Cart.css";
 
 function Cart() {
+  
   const navigate = useNavigate();
   const { cart, updateQuantity, removeFromCart, getCartCount, clearCart } = useCart();
   const { user } = useAuth();

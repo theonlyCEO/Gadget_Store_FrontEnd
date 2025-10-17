@@ -5,6 +5,7 @@ import "./Orders.css";
 
 
 function Orders() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const { user } = useAuth();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ function Orders() {
   // Fetch orders
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/orders?email=${user.email}`)
+      fetch(`${apiUrl}/orders?email=${user.email}`)
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch orders");
           return res.json();

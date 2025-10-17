@@ -3,6 +3,9 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+  
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -10,7 +13,8 @@ function Profile() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("")
+  ;
 
   // Redirect if not logged in
   useEffect(() => {
@@ -22,7 +26,7 @@ function Profile() {
   // Fetch order history from backend
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/orders?email=${user.email}`)
+      fetch(`${apiUrl}/orders?email=${user.email}`)
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch orders");
           return res.json();
