@@ -3,6 +3,7 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import AuthPopup from "../components/AuthPopup";
 import "./Products.css";
+impotrt
 
 function Products() {
   const [products, setProducts] = useState([]);

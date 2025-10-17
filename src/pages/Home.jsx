@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import AuthPopup from "../components/AuthPopup";
 import "./Home.css";
+import .meta.env.NEXT_PUBLIC_API_URL 
 
 function Home() {
   const [products, setProducts] = useState([]);
