@@ -5,7 +5,8 @@ import AuthPopup from "../components/AuthPopup";
 import "./Products.css";
 
 function Products() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+ const apiUrl = import.meta.env.VITE_API_URL;
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

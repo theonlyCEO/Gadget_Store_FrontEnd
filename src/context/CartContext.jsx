@@ -6,7 +6,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const { user, logout } = useAuth(); // Assume logout clears user
   const [cart, setCart] = useState([]); // No localStorage – sync with server
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
   // Load cart from server on login/user change
   useEffect(() => {

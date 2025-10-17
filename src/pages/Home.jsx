@@ -6,8 +6,9 @@ import AuthPopup from "../components/AuthPopup";
 import "./Home.css";
 // import .meta.env.NEXT_PUBLIC_API_URL 
 function Home() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);

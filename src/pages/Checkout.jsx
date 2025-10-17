@@ -8,7 +8,7 @@ function Checkout() {
   const { cart, removeFromCart, clearCart, getCartCount } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
   // Shipping form state
   const [address, setAddress] = useState("");

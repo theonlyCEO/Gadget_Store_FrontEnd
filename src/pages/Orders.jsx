@@ -5,7 +5,8 @@ import "./Orders.css";
 
 
 function Orders() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const { user } = useAuth();
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);

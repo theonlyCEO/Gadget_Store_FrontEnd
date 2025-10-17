@@ -4,12 +4,12 @@ const AuthContext = createContext();
 
 
 export function AuthProvider({ children }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
- 
+ const apiUrl = import.meta.env.VITE_API_URL;
+
   
   useEffect(() => {
     if (user) {

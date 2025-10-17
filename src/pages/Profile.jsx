@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "./Profile.css";
   
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -14,6 +13,8 @@ function Profile() {
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [error, setError] = useState("")
+ const apiUrl = import.meta.env.VITE_API_URL;
+
   ;
 
   // Redirect if not logged in
