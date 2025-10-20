@@ -153,7 +153,7 @@ function Home() {
         <h2>Latest Gadgets</h2>
         <div className="latest-slideshow" role="region" aria-label="Latest gadgets slideshow">
           <div className="latest-slide" style={{ transform: `translateX(-${currentSlide * 33.33}%)` }}> {/* Adjusted for 3 items per slide */}
-            {products.slice(6, 12).map((product) => (
+            {products.slice(6, 23).map((product) => (
               <div className="product-card" key={product._id}>
                 <img src={product.imageUrl} alt={product.name} loading="lazy" />
                 <h3>{product.name}</h3>
