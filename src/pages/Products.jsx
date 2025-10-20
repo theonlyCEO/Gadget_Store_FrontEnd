@@ -5,7 +5,7 @@ import AuthPopup from "../components/AuthPopup";
 import "./Products.css";
 
 function Products() {
- const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,7 +69,13 @@ function Products() {
 
       <div className="filter-menu">
         <label htmlFor="category-filter" className="filter-label">Filter by Category:</label>
-        <select id="category-filter" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="category-select">
+        <select 
+          id="category-filter" 
+          value={selectedCategory} 
+          onChange={(e) => setSelectedCategory(e.target.value)} 
+          className="category-select"
+          aria-label="Filter products by category"
+        >
           <option value="all">All Categories</option>
           <option value="laptopsAndComputer">Laptops & Computers</option>
           <option value="smartphones">Smartphones</option>
@@ -84,17 +90,27 @@ function Products() {
             <div className="product-image-container">
               <img src={product.imageUrl} alt={product.name} className="product-img" />
               <div className="overlay">
-                <button className="quick-view-btn" onClick={() => openPopup(product)}>Quick View</button>
+                <button className="quick-view-btn" onClick={() => openPopup(product)} aria-label={`Quick view ${product.name}`}>Quick View</button>
               </div>
             </div>
             <h3 className="product-name">{product.name}</h3>
             <p className="product-price">R{product.price.toFixed(2)}</p>
             {product.rating && <p className="product-rating">★ {product.rating}/5</p>}
             <div className="button-group">
-              <button className="add-btn" onClick={() => handleAddToCart(product)} disabled={!user}>
+              <button 
+                className="add-btn" 
+                onClick={() => handleAddToCart(product)} 
+                disabled={!user}
+                aria-label={user ? `Add ${product.name} to cart` : "Sign in to add to cart"}
+              >
                 {user ? "Add to Cart" : "Sign In to Add"}
               </button>
-              <a href="#" className="details-link" onClick={(e) => { e.preventDefault(); openPopup(product); }}>
+              <a 
+                href="#" 
+                className="details-link" 
+                onClick={(e) => { e.preventDefault(); openPopup(product); }}
+                aria-label={`View details for ${product.name}`}
+              >
                 View Details
               </a>
             </div>
@@ -105,15 +121,20 @@ function Products() {
       {isPopupOpen && selectedProduct && (
         <div className="popup-overlay" onClick={closePopup}>
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={closePopup}>×</button>
+            <button className="close-btn" onClick={closePopup} aria-label="Close popup">×</button>
             <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="popup-img" />
             <div className="popup-details">
               <h2 className="popup-name">{selectedProduct.name}</h2>
-              <p className="popup-price">${selectedProduct.price.toFixed(2)}</p>
+              <p className="popup-price">R{selectedProduct.price.toFixed(2)}</p> {/* Consistent with site */}
               {selectedProduct.description && <p className="popup-desc">{selectedProduct.description}</p>}
               {selectedProduct.category && <p className="popup-category"><strong>Category:</strong> {selectedProduct.category}</p>}
               {selectedProduct.rating && <p className="popup-rating">Rating: ★ {selectedProduct.rating}/5</p>}
-              <button className="popup-add-btn" onClick={() => handleAddToCart(selectedProduct)} disabled={!user}>
+              <button 
+                className="popup-add-btn" 
+                onClick={() => handleAddToCart(selectedProduct)} 
+                disabled={!user}
+                aria-label={user ? `Add ${selectedProduct.name} to cart` : "Sign in to add to cart"}
+              >
                 {user ? "Add to Cart" : "Sign In to Add"}
               </button>
             </div>

@@ -1,6 +1,10 @@
 /* Import Google Fonts for a modern typography */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+* {
+  box-sizing: border-box; /* Prevent overflows */
+}
+
 .products-page {
   font-family: "Poppins", sans-serif;
   padding: 40px 60px;
@@ -60,6 +64,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   outline: none;
+  min-height: 44px; /* Touch target */
 }
 
 .category-select:hover,
@@ -84,7 +89,8 @@
   border-radius: 15px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  width: 250px;
+  width: 100%; /* Full width in grid */
+  max-width: 250px;
   padding: 20px;
   text-align: center;
   position: relative;
@@ -142,6 +148,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
+  min-height: 44px;
 }
 
 .quick-view-btn:hover {
@@ -187,11 +194,17 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease;
+  min-height: 44px;
 }
 
 .add-btn:hover {
   background: #005ed0;
   transform: scale(1.05);
+}
+
+.add-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .details-link {
@@ -200,6 +213,10 @@
   font-size: 0.9rem;
   font-weight: 500;
   transition: color 0.3s ease;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .details-link:hover {
@@ -316,11 +333,17 @@
   transition: background 0.3s ease, transform 0.3s ease;
   align-self: flex-start;
   width: auto;
+  min-height: 44px;
 }
 
 .popup-add-btn:hover {
   background: #005ed0;
   transform: scale(1.05);
+}
+
+.popup-add-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 /* Animations */
@@ -334,57 +357,200 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Loading/Error */
+.loading, .error {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+}
+
 /* Responsive Design */
+/* Tablets */
+@media (max-width: 1024px) {
+  .products-page {
+    padding: 30px 40px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+  }
+
+  .product-card {
+    max-width: 220px;
+    padding: 15px;
+  }
+
+  .product-img {
+    height: 200px;
+  }
+
+  .popup-content {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .popup-img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .products-page {
     padding: 20px;
   }
+
   .products-title {
     font-size: 2rem;
   }
+
   .products-subtitle {
     font-size: 1rem;
   }
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
+
   .filter-menu {
     flex-direction: column;
     gap: 15px;
   }
+
+  .filter-label {
+    font-size: 0.95rem;
+  }
+
+  .category-select {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+  }
+
   .product-card {
-    width: 200px;
+    max-width: 180px;
     padding: 15px;
   }
+
   .product-img {
-    height: 180px;
+    height: 160px;
   }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-price {
+    font-size: 1.1rem;
+  }
+
   .popup-content {
     flex-direction: column;
     text-align: center;
     padding: 15px;
-    max-width: 90%;
+    max-width: 95%;
   }
+
   .popup-img {
     width: 150px;
     height: 150px;
     margin-bottom: 15px;
   }
+
   .popup-name {
     font-size: 1.5rem;
   }
+
   .popup-price {
     font-size: 1.3rem;
   }
+
   .popup-details {
     text-align: center;
   }
+
   .popup-add-btn {
     align-self: center;
     width: 100%;
   }
 }
-.re{
 
+/* Small phones */
+@media (max-width: 480px) {
+  .products-page {
+    padding: 15px;
+  }
+
+  .products-title {
+    font-size: 1.8rem;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .product-card {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .product-img {
+    height: 140px;
+  }
+
+  .button-group {
+    gap: 8px;
+  }
+
+  .add-btn, .details-link {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .popup-content {
+    padding: 10px;
+  }
+
+  .popup-name {
+    font-size: 1.3rem;
+  }
+
+  .popup-desc {
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 350px) {
+  .products-title {
+    font-size: 1.6rem;
+  }
+
+  .filter-label, .category-select {
+    font-size: 0.9rem;
+  }
+
+  .product-name {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .popup-img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .popup-name {
+    font-size: 1.2rem;
+  }
+
+  .popup-price {
+    font-size: 1.1rem;
+  }
 }

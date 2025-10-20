@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box; /* Prevent overflows */
+}
+
 .profile-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -19,6 +23,7 @@
   color: #333;
   margin-bottom: 2rem;
   font-size: 2rem;
+  font-weight: bold;
 }
 
 /* Cards */
@@ -61,6 +66,7 @@
 .value {
   color: #333;
   margin-top: 0.25rem;
+  font-size: 1rem;
 }
 
 /* Action Buttons */
@@ -76,6 +82,7 @@
   cursor: pointer;
   font-size: 0.95rem;
   transition: background 0.2s;
+  min-height: 44px; /* Touch target */
 }
 
 .logout-btn {
@@ -141,10 +148,15 @@
 }
 
 /* Orders Table */
+.table-wrapper {
+  overflow-x: auto; /* Horizontal scroll on small screens */
+}
+
 .orders-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
+  min-width: 600px; /* Force scroll if needed */
 }
 
 .orders-table th, .orders-table td {
@@ -184,6 +196,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.85rem;
+  min-height: 44px;
 }
 
 .view-btn:hover {
@@ -206,15 +219,89 @@
   font-weight: bold;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Tablet & Mobile Adjustments */
+@media (max-width: 1024px) {
   .profile-container {
-    padding: 1rem;
+    padding: 1.5rem;
   }
+
   .info-grid {
     grid-template-columns: 1fr;
   }
+
   .action-buttons {
     flex-direction: column;
+  }
+
+  .logout-btn, .clear-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 1rem;
+  }
+
+  .profile-title {
+    font-size: 1.8rem;
+  }
+
+  .info-card h2, .cart-card h2, .orders-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .item-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .orders-table th, .orders-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 1rem;
+  }
+
+  .profile-title {
+    font-size: 1.6rem;
+  }
+
+  .info-item .label, .info-item .value {
+    font-size: 0.9rem;
+  }
+
+  .cart-history-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .item-total {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .view-btn {
+    width: 100%;
+    padding: 0.6rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .profile-title {
+    font-size: 1.4rem;
+  }
+
+  .info-card, .cart-card, .orders-card {
+    padding: 1rem;
+  }
+
+  .orders-table th, .orders-table td {
+    font-size: 0.8rem;
+    padding: 0.4rem;
   }
 }

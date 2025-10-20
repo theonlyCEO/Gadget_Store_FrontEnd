@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box; /* Prevent overflows */
+}
+
 .orders-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -19,19 +23,26 @@
   color: #333;
   margin-bottom: 0.5rem;
   font-size: 2rem;
+  font-weight: bold;
 }
 
 .orders-subtitle {
   text-align: center;
   color: #666;
   margin-bottom: 2rem;
+  font-size: 1rem;
 }
 
 /* Table Styles */
+.table-wrapper {
+  overflow-x: auto; /* Horizontal scroll on small screens */
+  margin-top: 1rem;
+}
+
 .orders-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  min-width: 600px; /* Force scroll if needed on small screens */
 }
 
 .orders-table th, .orders-table td {
@@ -81,18 +92,20 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background 0.2s;
+  min-height: 44px; /* Touch target */
 }
 
 .track-btn:hover {
   background: #218838;
 }
 
-/* Empty & Error */
-.empty-message {
+/* Empty & Error & Loading */
+.empty-message, .loading-message {
   text-align: center;
   color: #666;
   font-style: italic;
   margin: 2rem 0;
+  font-size: 1rem;
 }
 
 .empty-message a {
@@ -104,19 +117,8 @@
   color: #dc3545;
   font-weight: bold;
   text-align: center;
+  font-size: 1rem;
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .orders-table {
-    font-size: 0.9rem;
-  }
-  .orders-table th, .orders-table td {
-    padding: 0.5rem;
-  }
-}
-
-/* ... your existing styles ... */
 
 /* Modal Styles */
 .modal-overlay {
@@ -141,6 +143,8 @@
   position: relative;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 @keyframes fadeIn {
@@ -157,6 +161,10 @@
   font-size: 1.5rem;
   cursor: pointer;
   color: #666;
+}
+
+.modal-close:hover {
+  color: #ff4444;
 }
 
 .modal-summary {
@@ -178,6 +186,7 @@
   text-align: center;
   z-index: 2;
   position: relative;
+  flex: 1;
 }
 
 .step span {
@@ -198,22 +207,10 @@
   align-items: center;
   font-weight: bold;
   margin: 0 auto;
-  animation: fadeInCheck 0.5s ease;
-}
-
-@keyframes fadeInCheck {
-  from { opacity: 0; transform: scale(0); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 .truck {
   font-size: 2rem;
-  animation: moveTruck 5s linear infinite;
-}
-
-@keyframes moveTruck {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(200%); } /* Moves across the line */
 }
 
 .step.future span {
@@ -235,31 +232,144 @@
   height: 100%;
   width: 50%; /* From placed to shipped */
   background: #007bff;
-  animation: fillProgress 5s linear infinite;
 }
 
-@keyframes fillProgress {
-  0% { width: 0%; }
-  100% { width: 75%; } /* Towards delivered */
-}
-
+/* Arrival Note */
 .arrival-note {
   text-align: center;
   font-weight: bold;
   color: #28a745;
   margin-top: 1.5rem;
+  font-size: 1rem;
 }
 
-/* Responsive */
+/* Tablet Adjustments */
+@media (max-width: 1024px) {
+  .orders-container {
+    padding: 1.5rem;
+  }
+
+  .orders-title {
+    font-size: 1.8rem;
+  }
+
+  .orders-table th, .orders-table td {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .modal-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .orders-page {
+    padding: 1rem;
+  }
+
+  .orders-title {
+    font-size: 1.6rem;
+  }
+
+  .orders-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .orders-table th, .orders-table td {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .track-btn {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .tracking-timeline {
+    flex-wrap: wrap;
+  }
+
+  .step {
+    flex-basis: 25%;
+  }
+
+  .check {
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+
+  .truck {
+    font-size: 1.5rem;
+  }
+}
+
+/* Small Phones */
 @media (max-width: 480px) {
+  .orders-container {
+    padding: 1rem;
+  }
+
+  .orders-title {
+    font-size: 1.4rem;
+  }
+
   .tracking-timeline {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .progress-bar {
-    display: none; /* Simplify on mobile */
+    display: none; /* Simplify on small screens */
   }
+
   .step {
     margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .step span {
+    font-size: 0.85rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+    width: 95%;
+  }
+
+  .modal-summary, .arrival-note {
+    font-size: 0.9rem;
+  }
+
+  /* Disable heavy animations on mobile */
+  .truck {
+    animation: none;
+  }
+
+  .progress-fill {
+    animation: none;
+  }
+}
+
+/* Extra-Small Phones */
+@media (max-width: 350px) {
+  .orders-title {
+    font-size: 1.3rem;
+  }
+
+  .orders-table th, .orders-table td {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
+
+  .check {
+    width: 25px;
+    height: 25px;
+  }
+
+  .truck {
+    font-size: 1.2rem;
   }
 }

@@ -3,7 +3,6 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Orders.css";
 
-
 function Orders() {
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -70,38 +69,40 @@ function Orders() {
         <p className="orders-subtitle">View and track your order history</p>
 
         {loading ? (
-          <p>Loading orders...</p>
+          <p className="loading-message">Loading orders...</p>
         ) : error ? (
-          <p className="error-message">{error}</p>
+          <p className="error-message" role="alert">{error}</p>
         ) : orders.length > 0 ? (
-          <table className="orders-table">
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Date</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id.slice(-6)}</td>
-                  <td>{formatDate(order.createdAt)}</td>
-                  <td>{order.items.length} item(s)</td>
-                  <td>R {parseFloat(order.total).toFixed(2)}</td>
-                  <td><span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></td>
-                  <td>
-                    <button className="track-btn" onClick={() => handleTrack(order)}>
-                      Track
-                    </button>
-                  </td>
+          <div className="table-wrapper">
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id.slice(-6)}</td>
+                    <td>{formatDate(order.createdAt)}</td>
+                    <td>{order.items.length} item(s)</td>
+                    <td>R {parseFloat(order.total).toFixed(2)}</td>
+                    <td><span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></td>
+                    <td>
+                      <button className="track-btn" onClick={() => handleTrack(order)} aria-label={`Track order ${order._id.slice(-6)}`}>
+                        Track
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         ) : (
           <p className="empty-message">No orders yet. <a href="/products">Start shopping!</a></p>
         )}
@@ -109,10 +110,10 @@ function Orders() {
 
       {/* Tracking Modal */}
       {isModalOpen && selectedOrder && (
-        <div className="modal-overlay" onClick={closeModal}>
+        <div className="modal-overlay" onClick={closeModal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={closeModal}>×</button>
-            <h2>Tracking Order {selectedOrder._id.slice(-6)}</h2>
+            <button className="modal-close" onClick={closeModal} aria-label="Close modal">×</button>
+            <h2 id="modal-title">Tracking Order {selectedOrder._id.slice(-6)}</h2>
             <p className="modal-summary">
               Placed on: {formatDate(selectedOrder.createdAt)} | Total: R {parseFloat(selectedOrder.total).toFixed(2)} | Items: {selectedOrder.items.length}
             </p>

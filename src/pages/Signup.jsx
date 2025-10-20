@@ -49,9 +49,9 @@ function Signup() {
         <h1 className="signup-title">Create Your Account</h1>
         <p className="signup-subtitle">Join GadgetStore and start shopping!</p>
         
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message" role="alert">{error}</p>}
         
-        <form onSubmit={handleSubmit} className="signup-form">
+        <form onSubmit={handleSubmit} className="signup-form" noValidate>
           <input
             type="text"
             placeholder="Username"
@@ -59,6 +59,7 @@ function Signup() {
             onChange={(e) => setUserName(e.target.value)}
             required
             className="signup-input"
+            aria-label="Username"
           />
           <input
             type="email"
@@ -67,6 +68,7 @@ function Signup() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="signup-input"
+            aria-label="Email"
           />
           <input
             type="password"
@@ -75,6 +77,7 @@ function Signup() {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="signup-input"
+            aria-label="Password"
           />
           <input
             type="password"
@@ -83,6 +86,7 @@ function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             className="signup-input"
+            aria-label="Confirm Password"
           />
           <button type="submit" className="signup-btn" disabled={loading}>
             {loading ? "Creating Account..." : "Sign Up"}

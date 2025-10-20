@@ -25,6 +25,8 @@
   list-style: none;
   display: flex;
   gap: 25px;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
@@ -52,6 +54,7 @@
   background-color: #222;
   border-radius: 25px;
   overflow: hidden;
+  position: relative;  /* For dropdown positioning */
 }
 
 .search-bar input {
@@ -84,6 +87,14 @@
   position: relative;
   text-decoration: none;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .icon-btn:hover {
@@ -102,25 +113,17 @@
   right: -10px;
 }
 
-/* Responsive */
-@media (max-width: 850px) {
-  .nav-links {
-    display: none;
-  }
-
-  .search-bar input {
-    width: 120px;
-  }
-
-  .navbar {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+/* Hamburger Menu (hidden on large screens) */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
-a{
-  text-decoration: none;
-  color: black;
-}
+
+/* User Dropdown (your existing styles) */
 .user-dropdown {
   position: relative;
 }
@@ -153,18 +156,19 @@ a{
 .dropdown-item:hover {
   background: #f5f5f5;
 }
+
 .user-avatar {
   width: 32px;
   height: 32px;
-  background: #007bff; /* Blue background – match your theme */
+  background: #007bff;
   color: white;
   font-weight: bold;
   font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Circle */
-  text-transform: uppercase; /* For initial */
+  border-radius: 50%;
+  text-transform: uppercase;
 }
 
 .dropdown-header {
@@ -173,34 +177,14 @@ a{
   color: #333;
   border-bottom: 1px solid #eee;
   margin-bottom: 0.5rem;
-  pointer-events: none; /* Not clickable */
+  pointer-events: none;
 }
 
-/* Ensure icon-btn accommodates avatar */
-.icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  position: relative;
-}
-
-/* Optional: Hover effect */
 .user-avatar:hover {
   background: #0056b3;
 }
-/* ... existing styles ... */
 
-/* Search Results Dropdown */
-.search-bar {
-  position: relative;
-}
-
+/* Search Results Dropdown (your existing, consolidated) */
 .search-results {
   position: absolute;
   top: 100%;
@@ -260,32 +244,72 @@ a{
   text-align: center;
 }
 
-/* Ensure search bar input is styled properly */
-.search-bar input {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px 0 0 4px;
-  font-size: 0.95rem;
-  width: 200px;
+a {
+  text-decoration: none;
+  color: black;
 }
 
-.search-bar button {
-  padding: 0.5rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-  transition: background 0.2s;
-}
+/* Responsive Adjustments */
+@media (max-width: 850px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 12px 15px;
+  }
 
-.search-bar button:hover {
-  background: #0056b3;
-}
+  .nav-links {
+    display: none;  /* Hidden by default */
+    flex-direction: column;
+    width: 100%;
+    background-color: #111;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    transition: all 0.3s ease;  /* Smooth open/close */
+  }
 
-/* Responsive */
-@media (max-width: 768px) {
+  .nav-links.mobile-open {
+    display: flex;  /* Show when toggled */
+  }
+
+  .nav-links a {
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hamburger {
+    display: block;  /* Show hamburger */
+  }
+
   .search-bar input {
-    width: 150px;
+    width: 120px;
+  }
+
+  .nav-actions {
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-bar input {
+    width: 80px;
+  }
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  /* Ensure dropdowns fit small screens */
+  .search-results, .dropdown-menu {
+    width: 100%;
+    left: 0;
+    right: auto;
   }
 }

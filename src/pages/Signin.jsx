@@ -42,9 +42,9 @@ function Signin() {
         <h1 className="signin-title">Welcome Back</h1>
         <p className="signin-subtitle">Sign in to your GadgetStore account</p>
         
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message" role="alert">{error}</p>}
         
-        <form onSubmit={handleSubmit} className="signin-form">
+        <form onSubmit={handleSubmit} className="signin-form" noValidate>
           <input
             type="email"
             placeholder="Email"
@@ -52,6 +52,7 @@ function Signin() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="signin-input"
+            aria-label="Email"
           />
           <input
             type="password"
@@ -60,6 +61,7 @@ function Signin() {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="signin-input"
+            aria-label="Password"
           />
           <button type="submit" className="signin-btn" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}

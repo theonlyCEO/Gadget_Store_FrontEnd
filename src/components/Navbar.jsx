@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaSearch, FaUser, FaBars, FaTimes } from "react-icons/fa";  // Added FaBars and FaTimes
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
@@ -13,8 +13,10 @@ function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);  // New state for mobile menu
   const dropdownRef = useRef(null);
   const searchRef = useRef(null);
+  const mobileMenuRef = useRef(null);  // For outside click if needed
 
   // Extract display name for avatar
   const displayName = user?.userName || (user?.email ? user.email.charAt(0).toUpperCase() : "U");
@@ -29,12 +31,15 @@ function Navbar() {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setIsSearchOpen(false);
       }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target) && !event.target.closest('.hamburger')) {
+        setIsMobileMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle search input
+  // Handle search input (unchanged)
   const handleSearch = async (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -56,7 +61,7 @@ function Navbar() {
     }
   };
 
-  // Handle logout
+  // Handle logout (unchanged)
   const handleLogout = () => {
     setIsDropdownOpen(false);
     logout();
@@ -64,12 +69,23 @@ function Navbar() {
     navigate("/");
   };
 
-  // Navigate to product page
+  // Navigate to product page (unchanged)
   const handleProductClick = (productId) => {
     setSearchQuery("");
     setSearchResults([]);
     setIsSearchOpen(false);
+    setIsMobileMenuOpen(false);  // Close mobile menu if open
     navigate(`/products/${productId}`);
+  };
+
+  // Toggle mobile menu
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Close mobile menu on link click
+  const handleMobileLinkClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -80,11 +96,17 @@ function Navbar() {
         </Link>
       </div>
 
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/products">Categories</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
+      {/* Hamburger Button - visible only on mobile */}
+      <button className="hamburger" onClick={toggleMobileMenu} aria-label="Toggle menu">
+        {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      {/* Nav Links - hidden on mobile, toggleable */}
+      <ul className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`} ref={mobileMenuRef}>
+        <li><Link to="/" onClick={handleMobileLinkClick}>Home</Link></li>
+        <li><Link to="/products" onClick={handleMobileLinkClick}>Categories</Link></li>
+        <li><Link to="/about" onClick={handleMobileLinkClick}>About</Link></li>
+        <li><Link to="/contact" onClick={handleMobileLinkClick}>Contact</Link></li>
       </ul>
 
       <div className="nav-actions">
@@ -163,7 +185,7 @@ function Navbar() {
           )}
         </div>
 
-        <Link to="/cart" className="icon-btn cart">
+        <Link to="/cart" className="icon-btn cart" onClick={handleMobileLinkClick}>
           <FaShoppingCart />
           <span className="cart-count">{getCartCount()}</span>
         </Link>

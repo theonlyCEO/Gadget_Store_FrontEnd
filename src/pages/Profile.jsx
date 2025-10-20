@@ -3,8 +3,6 @@ import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
-  
-
 
 function Profile() {
   const { user, logout } = useAuth();
@@ -12,10 +10,8 @@ function Profile() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
-  const [error, setError] = useState("")
- const apiUrl = import.meta.env.VITE_API_URL;
-
-  ;
+  const [error, setError] = useState("");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   // Redirect if not logged in
   useEffect(() => {
@@ -68,8 +64,8 @@ function Profile() {
         <h1 className="profile-title">My Profile</h1>
 
         {/* User Info Card */}
-        <div className="info-card">
-          <h2>User Information</h2>
+        <section className="info-card" aria-labelledby="info-title">
+          <h2 id="info-title">User Information</h2>
           <div className="info-grid">
             <div className="info-item">
               <span className="label">Username:</span>
@@ -89,14 +85,14 @@ function Profile() {
             </div>
           </div>
           <div className="action-buttons">
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
-            <button className="clear-btn" onClick={handleClearStorage}>Clear Browser Data (Debug)</button>
+            <button className="logout-btn" onClick={handleLogout} aria-label="Logout">Logout</button>
+            <button className="clear-btn" onClick={handleClearStorage} aria-label="Clear browser data">Clear Browser Data (Debug)</button>
           </div>
-        </div>
+        </section>
 
         {/* Current Cart Section */}
-        <div className="cart-card">
-          <h2>Current Cart ({getCartCount()} items)</h2>
+        <section className="cart-card" aria-labelledby="cart-title">
+          <h2 id="cart-title">Current Cart ({getCartCount()} items)</h2>
           {cart.length > 0 ? (
             <div className="cart-items">
               {cart.map((item) => (
@@ -116,44 +112,46 @@ function Profile() {
           ) : (
             <p className="empty-message">Your cart is empty. <a href="/products">Shop now!</a></p>
           )}
-        </div>
+        </section>
 
         {/* Order History Section */}
-        <div className="orders-card">
-          <h2>Order History</h2>
+        <section className="orders-card" aria-labelledby="orders-title">
+          <h2 id="orders-title">Order History</h2>
           {loadingOrders ? (
             <p>Loading orders...</p>
           ) : error ? (
-            <p className="error-message">{error}</p>
+            <p className="error-message" role="alert">{error}</p>
           ) : orders.length > 0 ? (
-            <table className="orders-table">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Date</th>
-                  <th>Items</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order._id.slice(-6)}</td> {/* Short ID */}
-                    <td>{formatDate(order.createdAt)}</td>
-                    <td>{order.items.length} item(s)</td>
-                    <td>R {order.total}</td>
-                    <td><span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></td>
-                    <td><button className="view-btn">View Details</button></td>
+            <div className="table-wrapper">
+              <table className="orders-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order._id}>
+                      <td>{order._id.slice(-6)}</td> {/* Short ID */}
+                      <td>{formatDate(order.createdAt)}</td>
+                      <td>{order.items.length} item(s)</td>
+                      <td>R {order.total}</td>
+                      <td><span className={`status ${order.status.toLowerCase()}`}>{order.status}</span></td>
+                      <td><button className="view-btn" aria-label={`View details for order ${order._id}`}>View Details</button></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p className="empty-message">No past orders. <a href="/products">Start shopping!</a></p>
           )}
-        </div>
+        </section>
       </div>
     </div>
   );
